@@ -2,6 +2,15 @@
 using System.Collections;
 
 public class TempEnemyFollow : MonoBehaviour {
+
+    public enum eFollowBevaviour {
+        BASIC,
+        FLANK,
+        IGNOREWALLS
+    }
+
+    public eFollowBevaviour behaviour = eFollowBevaviour.BASIC;
+
     NavMeshAgent agent;
 
 	void Awake () {
@@ -10,6 +19,16 @@ public class TempEnemyFollow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        agent.SetDestination(GameObject.Find("FPSController").transform.position);
+        switch (behaviour) {
+            case eFollowBevaviour.BASIC:
+                agent.SetDestination(GameObject.Find("FPSController").transform.position);
+                break;
+            case eFollowBevaviour.FLANK:
+                agent.SetDestination(GameObject.Find("FPSController").transform.FindChild("flankDest").position);
+                break;
+            case eFollowBevaviour.IGNOREWALLS:
+
+                break;
+        }
 	}
 }
